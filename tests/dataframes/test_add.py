@@ -1,6 +1,6 @@
 from pandas.testing import assert_series_equal
 import pandas as pd
-from src.pandas.add import AddTwoColumns
+from src.dataframes.add import AddTwoColumns
 
 
 class TestAddTwoColumns:
