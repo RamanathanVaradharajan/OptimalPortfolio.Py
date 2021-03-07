@@ -3,5 +3,4 @@ numpy
 pytest
 tox
 yfinance
-yahoofinancials
 openpyxl
