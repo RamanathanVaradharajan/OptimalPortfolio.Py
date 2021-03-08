@@ -39,8 +39,9 @@ class Output:
         df["Optimal_Weight"] = res.x
 
         optimized_weights = df["Optimal_Weight"].to_numpy()
-        sharpe_ratio = Calculate().portfolio_volatility(
-            optimized_weights, daily_history, df
-        )
+        # TODO: Sharpe ratio should be output of calculation node Sharpe ratio.
+        # sharpe_ratio = Calculate().portfolio_volatility(
+        #    optimized_weights, daily_history, df
+        # )
         df["Optimal_Allocation"] = df["Optimal_Weight"] * (df["Amount"].sum())
         return df
