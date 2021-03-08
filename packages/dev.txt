@@ -4,3 +4,4 @@ pytest
 tox
 yfinance
 openpyxl
+scipy
