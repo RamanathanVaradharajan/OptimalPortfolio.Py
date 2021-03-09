@@ -46,6 +46,7 @@ class Calculate:
         self, weights: np.array, history_df: pd.DataFrame, input_df: pd.DataFrame
     ):
         weight = weights
+        # TODO: Do not have to calculate the covariance matrix during every iteration.
         stocks = list(input_df["Stock"])
         covariance_matrix = np.zeros((len(stocks), len(stocks)))
         for id1, stock1 in enumerate(stocks):
@@ -57,7 +58,11 @@ class Calculate:
                 )
 
         # TODO: separate it into methods.
-        covariance_df = (pd.DataFrame(covariance_matrix, columns=stocks, index=stocks))
+        # Use covariance matrix as separate method.
+        # Use a method to get portfolio return and standard deviation.
+        # Use a method to get sharpe ratio(portfolio return - market return)/portfolio standard deviation
+        # TODO: Covariance df should be output of covariance method.
+        # covariance_df = pd.DataFrame(covariance_matrix, columns=stocks, index=stocks)
         portfolio_return = weight.dot(input_df["Daily_Return"])
         portfolio_std = np.sqrt((weight.dot(covariance_matrix)).dot(weight))
         return 1.0 - (portfolio_return / portfolio_std)
