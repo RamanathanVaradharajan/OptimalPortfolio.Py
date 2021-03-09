@@ -30,4 +30,4 @@ class TestInputs:
                 "Amount": [25314.52, 5274.84, 4300.02, 3352.27, 777.44, 223.11],
             }
         ).set_index("Stock_ID")
-        assert_frame_equal(result_df, expected_df)
+        assert_frame_equal(result_df, expected_df, check_exact=True)
