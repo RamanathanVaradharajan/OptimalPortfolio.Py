@@ -1,19 +1,17 @@
 # Run the calculator.
-import sys
 import copy
-import pandas as pd
-
-sys.path.append("./../../")
+import sys
 
 from src.stock_calculator.inputs import Inputs
-from src.stock_calculator.yahoo_finance import YahooFinance
-from src.stock_calculator.calculations import Calculate
 from src.stock_calculator.outputs import Output
+from src.stock_calculator.yahoo_finance import YahooFinance
 
 
 if __name__ == "__main__":
 
-    input_df = Inputs().read_inputs(r"./../dataframes/input/input_portfolio.xlsx")
+    input_df = Inputs().read_inputs(
+        r"./src/dataframes/input/input_portfolio.xlsx"
+    )
     print(r"Input.")
     print(input_df)
 

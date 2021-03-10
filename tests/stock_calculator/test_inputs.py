@@ -1,8 +1,9 @@
 """
 Test inputs.
 """
-from pandas.testing import assert_frame_equal
 import pandas as pd
+from pandas.testing import assert_frame_equal
+
 from src.stock_calculator.inputs import Inputs
 
 
@@ -27,7 +28,14 @@ class TestInputs:
             {
                 "Stock_ID": [4, 5, 3, 2, 6, 1],
                 "Stock": ["RDS-A", "PLTR", "TSLA", "AMZN", "ENPH", "GOOG"],
-                "Amount": [25314.52, 5274.84, 4300.02, 3352.27, 777.44, 223.11],
+                "Amount": [
+                    25314.52,
+                    5274.84,
+                    4300.02,
+                    3352.27,
+                    777.44,
+                    223.11,
+                ],
             }
         ).set_index("Stock_ID")
         assert_frame_equal(result_df, expected_df, check_exact=True)
