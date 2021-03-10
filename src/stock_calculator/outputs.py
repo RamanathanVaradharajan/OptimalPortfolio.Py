@@ -1,7 +1,8 @@
-import pandas as pd
 import numpy as np
-from src.stock_calculator.calculations import Calculate
+import pandas as pd
 from scipy.optimize import minimize
+
+from src.stock_calculator.calculations import Calculate
 
 
 class Output:
