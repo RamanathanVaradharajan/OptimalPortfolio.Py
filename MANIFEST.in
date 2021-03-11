@@ -1,0 +1,3 @@
+recursive-include packages *.txt
+recursive-include src __version__.py
+global-include readme.md
