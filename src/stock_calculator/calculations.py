@@ -21,9 +21,9 @@ class Calculate:
             },
         )
 
-        merged_df = (
-            input_df.merge(temp_df, on="Stock", how="left")
-        ).set_index(input_df.index)
+        merged_df = (input_df.merge(temp_df, on="Stock", how="left")).set_index(
+            input_df.index
+        )
 
         return merged_df["Return"]
 
@@ -44,15 +44,15 @@ class Calculate:
             }
         )
 
-        merged_df = (
-            input_df.merge(temp_df, on="Stock", how="left")
-        ).set_index(input_df.index)
+        merged_df = (input_df.merge(temp_df, on="Stock", how="left")).set_index(
+            input_df.index
+        )
 
         return merged_df["Volatility"]
 
     def portfolio_volatility(
         self,
-        weights: np.array,
+        weights: np.ndarray,
         history_df: pd.DataFrame,
         input_df: pd.DataFrame,
     ):
@@ -78,5 +78,5 @@ class Calculate:
         # covariance_df = pd.DataFrame(
         # covariance_matrix, columns=stocks, index=stocks)
         portfolio_return = weight.dot(input_df["Daily_Return"])
-        portfolio_std = np.sqrt((weight.dot(covariance_matrix)).dot(weight))
+        portfolio_std = np.sqrt(np.dot(np.dot(weight, covariance_matrix), weight))
         return 1.0 - (portfolio_return / portfolio_std)
