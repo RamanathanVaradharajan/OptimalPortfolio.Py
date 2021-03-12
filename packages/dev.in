@@ -5,3 +5,11 @@ tox
 yfinance
 openpyxl
 scipy
+bandit
+black
+flake8
+isort
+mypy
+pytest-cov
+tox-venv
+safety
