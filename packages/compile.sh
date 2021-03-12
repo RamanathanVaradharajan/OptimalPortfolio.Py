@@ -12,3 +12,9 @@ pip install --upgrade pip-tools
 
 echo "Compiling required packages, please wait..."
 pip-compile --upgrade ./dev.in
+
+# remove the tox cache as new dependencies are installed.
+rm -rf ./../.tox/
+
+echo "[Success]: The packages are updated."
+echo "Install the packages by: 'pip install -r dev.txt'"
