@@ -20,10 +20,10 @@ class YahooFinance:
             stock_list: [list] = List of stock ticker signs.
             interval: str = Interval over which the history is collected.
         """
-
+        # TODO: now the intervals is always 1d. Be careful and aware to refactor this node.
         return yf.download(
             stock_list,
-            period="1wk",
+            period="6mo",
             progress=False,
-            interval=intervals,
+            interval="1d",
         )

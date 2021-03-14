@@ -12,7 +12,7 @@ if __name__ == "__main__":
 
     input_df = Inputs().read_inputs(ein.filepath)
     print(r"Input.")
-    print(input_df)
+    # print(input_df)
 
     output_df = copy.copy(input_df)
     stocks = list(input_df[ein.df_stock])
@@ -20,4 +20,6 @@ if __name__ == "__main__":
     output_df = Output().put_outputs(output_df, daily, monthly, quarterly)
 
     print(r"Output.")
+    # print(input_df)
     print(output_df)
+    output_df.to_excel(ein.outpath)
