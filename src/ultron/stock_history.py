@@ -1,6 +1,8 @@
 import pandas as pd
 import yfinance as yf
 
+from src.attributes import stock_history_names as shn
+
 
 class StockHistory:
     """
@@ -21,9 +23,10 @@ class StockHistory:
         Get the stock history.
         :return Pandas Dataframe containing the close price.
         """
-        return yf.download(
+        frame = yf.download(
             self.stocks,
             period=self.period,
             interval=self.interval,
             progress=False,
         )
+        return frame[shn.close]
