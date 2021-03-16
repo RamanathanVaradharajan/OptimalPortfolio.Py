@@ -1,4 +1,3 @@
-import pandas as pd
 import yfinance as yf
 from pandas.testing import assert_frame_equal, assert_series_equal
 
