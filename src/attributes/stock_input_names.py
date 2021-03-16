@@ -1,0 +1,5 @@
+stock_df_index = "Stock_ID"
+stock_df_stock_column = "Stock"
+stock_df_amount_column = "Amount"
+stock_df_input_file_location = r"./src/dataframes/input/input_portfolio.xlsx"
+stock_df_output_file_location = r"./src/dataframes/input/output_portfolio.xlsx"

@@ -3,6 +3,8 @@ import pandas as pd
 
 
 class Calculate:
+    count = 0
+
     def returns(self, history_df: pd.DataFrame, input_df: pd.DataFrame):
         """Determine the average returns.
         :parameters
@@ -57,8 +59,11 @@ class Calculate:
         input_df: pd.DataFrame,
     ):
         weight = weights
+        self.count += 1
         # TODO: Do not have to calculate the covariance matrix during
         #  every iteration.
+        if self.count % 10 == 0:
+            print(f"Iterating step: {self.count}. Weight: {np.around(weight, 2)}")
         stocks = list(input_df["Stock"])
         covariance_matrix = np.zeros((len(stocks), len(stocks)))
         for id1, stock1 in enumerate(stocks):
