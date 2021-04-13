@@ -32,10 +32,12 @@ class Output:
         bound = tuple((0, 1) for x in range(len(weights)))
         res = minimize(
             Calculate().portfolio_volatility,
-            len(weights)
-            * [
-                1.0 / len(weights),
-            ],
+            np.array(
+                len(weights)
+                * [
+                    1.0 / len(weights),
+                ]
+            ),
             args=(
                 monthly_history,
                 df,
@@ -43,9 +45,9 @@ class Output:
             method="SLSQP",
             bounds=bound,
             constraints=constraint,
+            tol=1e-8,
         )
-        df["Optimal_Weight"] = (res.x).round(2)
-
+        df["Optimal_Weight"] = res.x.round(2)
         optimized_weights = df["Optimal_Weight"].to_numpy()
         # TODO: Sharpe ratio should be output of calculation node Sharpe ratio.
         sharpe_ratio = Calculate().portfolio_volatility(
