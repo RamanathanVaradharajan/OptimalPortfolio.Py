@@ -48,10 +48,6 @@ class Output:
             tol=1e-8,
         )
         df["Optimal_Weight"] = res.x.round(2)
-        # OUTPUTS from solver
-        print("__________________")
-        print(res.nit)
-        print("__________________")
         optimized_weights = df["Optimal_Weight"].to_numpy()
         # TODO: Sharpe ratio should be output of calculation node Sharpe ratio.
         sharpe_ratio = Calculate().portfolio_volatility(
