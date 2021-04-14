@@ -13,3 +13,4 @@ mypy
 pytest-cov
 tox-venv
 safety
+jupyter
