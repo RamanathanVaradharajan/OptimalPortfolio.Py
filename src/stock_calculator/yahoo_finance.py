@@ -23,7 +23,7 @@ class YahooFinance:
         # TODO: now the intervals is always 1d. Be careful and aware to refactor this node.
         return yf.download(
             stock_list,
-            period="6mo",
+            period="max",
             progress=False,
             interval="1d",
         )
