@@ -13,9 +13,7 @@ mypy
 pytest-cov
 tox-venv
 safety
-jupyter
 dash
 dash_daq
-jupyter-dash
 plotly
 gunicorn
