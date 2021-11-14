@@ -13,8 +13,8 @@ with open(path.join(here, "src", "__version__.py"), "r") as f:
 with open(path.join(here, "readme.md"), encoding="utf-8") as f:
     long_description = f.read()
 
-# Get the dependencies from the packages.
-with open(path.join(here, "packages", "dev.txt"), encoding="utf-8") as f:
+# Get the dependencies from the requirements.
+with open(path.join(here, "requirements", "dev.txt"), encoding="utf-8") as f:
     requires = [line for line in f if not line.startswith("--")]
 
 setup(
