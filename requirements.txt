@@ -89,7 +89,7 @@ multitasking==0.0.10
     # via yfinance
 mypy==0.910
     # via -r ./dev.in
-mypy-extensions==0.4.3
+#mypy-extensions>=0.4.3
     # via
     #   black
     #   mypy

@@ -27,7 +27,7 @@ class Calculate:
             input_df.index
         )
 
-        return merged_df["Return"]
+        return ((1+merged_df["Return"])**252)-1
 
     def volatility(self, history_df: pd.DataFrame, input_df: pd.DataFrame):
         """Determine the standard deviation.
@@ -50,29 +50,30 @@ class Calculate:
             input_df.index
         )
 
-        return merged_df["Volatility"]
+        return merged_df["Volatility"]*(252**0.5)
 
     def portfolio_volatility(
         self,
         weights: np.ndarray,
         history_df: pd.DataFrame,
         input_df: pd.DataFrame,
+        covi: np.ndarray
     ):
         weight = weights
         self.count += 1
         # TODO: Do not have to calculate the covariance matrix during
         #  every iteration.
-        if self.count % 10 == 0:
-            print(f"Iterating step: {self.count}. Weight: {np.around(weight, 2)}")
-        stocks = list(input_df["Stock"])
-        covariance_matrix = np.zeros((len(stocks), len(stocks)))
-        for id1, stock1 in enumerate(stocks):
-            for id2, stock2 in enumerate(stocks):
-                covariance_matrix[id1][id2] = (
-                    history_df["Close"][stock1]
-                    .pct_change()
-                    .cov(history_df["Close"][stock2].pct_change())
-                )
+        # if self.count % 10 == 0:
+        #     print(f"Iterating step: {self.count}. Weight: {np.around(weight, 2)}")
+        # stocks = list(input_df["Stock"])
+        # covariance_matrix = np.zeros((len(stocks), len(stocks)))
+        # for id1, stock1 in enumerate(stocks):
+        #     for id2, stock2 in enumerate(stocks):
+        #         covariance_matrix[id1][id2] = (
+        #             history_df["Close"][stock1]
+        #             .pct_change()
+        #             .cov(history_df["Close"][stock2].pct_change())
+        #         )
 
         # TODO: separate it into methods.
         # Use covariance matrix as separate method.
@@ -83,5 +84,6 @@ class Calculate:
         # covariance_df = pd.DataFrame(
         # covariance_matrix, columns=stocks, index=stocks)
         portfolio_return = weight.dot(input_df["Daily_Return"])
-        portfolio_std = np.sqrt(np.dot(np.dot(weight, covariance_matrix), weight))
-        return 1.0 - (portfolio_return / portfolio_std)
+        portfolio_std = np.sqrt(np.dot(weight.T, np.dot(weight.T, covi)))*np.sqrt(252)
+        # multiply by sqrt(252) to get annualized sharp ratio
+        return - ((portfolio_return - 0.0425)/ portfolio_std)

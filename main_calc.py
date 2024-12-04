@@ -9,19 +9,14 @@ from src.stock_calculator.outputs import Output
 from src.stock_calculator.yahoo_finance import YahooFinance
 
 
-# if __name__ == "__main__":
-def calculator(df):
-    # input_df = Inputs().read_inputs(ein.filepath)
-    # override df
-    data = {
-        "Stock_ID": [1, 2, 3, 4],
-        "Stock": ["PLTR", "AMZN", "GOOG", "TSLA" ],
-        "Amount": [10277.03, 8655.62, 8324.38, 1500.72],
-    }
-    #input_df = pd.DataFrame(data).set_index("Stock_ID")
-    input_df = df
+if __name__ == "__main__":
+
+    input_df = Inputs().read_inputs(ein.filepath)
+    # input_df = input_df.head(20)
+
+
     print(r"Input.")
-    # print(input_df)
+    print(input_df)
 
     output_df = copy.copy(input_df)
     stocks = list(input_df[ein.df_stock])
@@ -32,4 +27,3 @@ def calculator(df):
     # print(input_df)
     print(output_df)
     output_df.to_excel(ein.outpath)
-    return output_df
