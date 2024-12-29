@@ -3,6 +3,7 @@ import pandas as pd
 from scipy.optimize import minimize
 
 from src.stock_calculator.calculations import Calculate
+from src.attributes import excel_input_names as inp
 
 
 class Output:
@@ -12,8 +13,9 @@ class Output:
         daily_history: pd.DataFrame,
         monthly_history: pd.DataFrame,
         quarterly_history: pd.DataFrame,
+        stocks: list
     ):
-        df["Daily_Return"] = Calculate().returns(daily_history, df)
+        df["Daily_Return"] = Calculate().returns(daily_history, df, stocks)
         # df["Monthly_Return"] = Calculate().returns(monthly_history, df)
         # df["Quarterly_Return"] = Calculate().returns(quarterly_history, df)
         df["Volatility"] = Calculate().volatility(daily_history, df)
@@ -32,7 +34,7 @@ class Output:
 
         neg_sharpe_ratio = Calculate().portfolio_volatility(weights, daily_history, df, covariance_matrix)
         expected_return = (df["Original_Allocation"] * df["Daily_Return"]).sum()
-        expected_std = (expected_return-0.0425) / (-1*neg_sharpe_ratio)
+        expected_std = (expected_return-inp.risk_free_rate) / (-1*neg_sharpe_ratio)
         print("Sharpe ratio: ", -1*neg_sharpe_ratio)
         print("Expected return: ", expected_return)
         print("Expected volatility:", expected_std)
@@ -67,7 +69,7 @@ class Output:
         )
 
         expected_return = (df["Optimal_Weight"] * df["Daily_Return"]).sum()
-        expected_std = (expected_return-0.0425) / (-1*neg_sharpe_ratio)
+        expected_std = (expected_return-inp.risk_free_rate) / (-1*neg_sharpe_ratio)
         print("Sharpe ratio: ", -1*neg_sharpe_ratio)
         print("Expected return: ", expected_return)
         print("Expected volatility:", expected_std)

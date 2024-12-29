@@ -1,11 +1,13 @@
 import numpy as np
 import pandas as pd
+import yfinance as yf
+from src.attributes import excel_input_names as inp
 
 
 class Calculate:
     count = 0
 
-    def returns(self, history_df: pd.DataFrame, input_df: pd.DataFrame):
+    def returns(self, history_df: pd.DataFrame, input_df: pd.DataFrame, stock_list: list):
         """Determine the average returns.
         :parameters
             history_df: DataFrame -> dataframe containing the historical
@@ -15,6 +17,18 @@ class Calculate:
         """
 
         averaged_returns = history_df["Close"].pct_change().mean()
+
+        # corrections for dividends
+        for stock in stock_list:
+            dividends = pd.DataFrame(yf.Ticker(stock).dividends).reset_index()
+            dividends["Date"] = pd.to_datetime(dividends["Date"].dt.strftime("%Y-%m-%d %H:%M:%S"))
+            dividends.set_index("Date", inplace=True)
+            frame = pd.concat([history_df["Close"][stock],dividends["Dividends"]],axis=1)
+            frame["Close"] = frame[stock]+frame["Dividends"].fillna(0)
+            frame["Return"] = (frame["Close"]-frame[stock].shift(1))/frame[stock].shift(1)
+            averaged_returns[stock]=frame["Return"].mean()
+
+        
 
         temp_df = pd.DataFrame(
             {
@@ -86,4 +100,4 @@ class Calculate:
         portfolio_return = weight.dot(input_df["Daily_Return"])
         portfolio_std = np.sqrt(np.dot(weight.T, np.dot(weight.T, covi)))*np.sqrt(252)
         # multiply by sqrt(252) to get annualized sharp ratio
-        return - ((portfolio_return - 0.0425)/ portfolio_std)
+        return - ((portfolio_return - inp.risk_free_rate)/ portfolio_std)
