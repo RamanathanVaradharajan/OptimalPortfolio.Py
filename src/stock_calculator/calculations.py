@@ -74,7 +74,7 @@ class Calculate:
         covi: np.ndarray
     ):
         weight = weights
-        self.count += 1
+        # self.count += 1
         # TODO: Do not have to calculate the covariance matrix during
         #  every iteration.
         # if self.count % 10 == 0:

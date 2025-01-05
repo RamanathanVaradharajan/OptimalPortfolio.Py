@@ -23,9 +23,9 @@ class YahooFinance:
         # TODO: now the intervals is always 1d. Be careful and aware to refactor this node.
         df =  yf.download(
             stock_list,
-            period="max",
+            # period="max",
             # start ="2014-01-01",
-            # end="2024-01-01",
+            end="2024-12-29",
             progress=False,
             interval="1d",
         )
