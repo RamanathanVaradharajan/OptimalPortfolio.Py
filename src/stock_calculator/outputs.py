@@ -1,6 +1,8 @@
 import numpy as np
 import pandas as pd
 from scipy.optimize import minimize
+import matplotlib.pyplot as plt
+import seaborn as sns
 
 from src.stock_calculator.calculations import Calculate
 from src.attributes import excel_input_names as inp
@@ -31,6 +33,12 @@ class Output:
                     .pct_change()
                     .cov(daily_history["Close"][stock2].pct_change())
                 )
+
+        cov_df = pd.DataFrame(covariance_matrix, index=stocks, columns=stocks)
+        plt.figure(figsize=(10, 8)) 
+        sns.heatmap(cov_df, annot=True, cmap="YlGnBu", linewidths=.5) 
+        plt.title('Covariance Matrix Heatmap') 
+        plt.show()
 
         neg_sharpe_ratio = Calculate().portfolio_volatility(weights, daily_history, df, covariance_matrix)
         expected_return = (df["Original_Allocation"] * df["Daily_Return"]).sum()

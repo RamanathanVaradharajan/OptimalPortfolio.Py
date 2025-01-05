@@ -18,15 +18,16 @@ class Calculate:
 
         averaged_returns = history_df["Close"].pct_change().mean()
 
-        # corrections for dividends
+        # corrections for dividends 
+        # turn on if yfinance<0.2.51
         for stock in stock_list:
             dividends = pd.DataFrame(yf.Ticker(stock).dividends).reset_index()
             dividends["Date"] = pd.to_datetime(dividends["Date"].dt.strftime("%Y-%m-%d %H:%M:%S"))
             dividends.set_index("Date", inplace=True)
             frame = pd.concat([history_df["Close"][stock],dividends["Dividends"]],axis=1)
-            frame["Close"] = frame[stock]+frame["Dividends"].fillna(0)
-            frame["Return"] = (frame["Close"]-frame[stock].shift(1))/frame[stock].shift(1)
-            averaged_returns[stock]=frame["Return"].mean()
+            # frame["Close"] = frame[stock]+frame["Dividends"].fillna(0)
+            # frame["Return"] = (frame["Close"]-frame[stock].shift(1))/frame[stock].shift(1)
+            # averaged_returns[stock]=frame["Return"].mean()
 
         
 

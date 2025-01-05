@@ -2,6 +2,8 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 from src.attributes import excel_input_names as ein
+import quantstats as qs
+import datetime
 
 class BackTest:
 
@@ -60,3 +62,49 @@ class BackTest:
         plt.tight_layout()
         plt.show()
         return "Done"
+    
+    def daily_return(self, frame, stocks, allocation):
+        # Download historical data
+        data = frame["Close"]
+        data = data[stocks].dropna()
+        data = data[data.index.year >= 2020]
+
+        # Normalize data
+        normalized_data = data / data.iloc[0]
+
+        # Set initial investment and monthly deposit
+        initial_investment = allocation.sum()
+        monthly_deposit = ein.monthly_investment
+        cash = ein.cash
+        total = initial_investment + cash
+        
+        cash_percentage = ein.cash/total
+        allocation = allocation/initial_investment
+        og_allocation = allocation
+
+        # Calculate portfolio value over time with monthly deposits
+        portfolio_value = pd.Series(index=normalized_data.index, dtype=float)
+        investment_value = initial_investment
+        portfolio_value.iloc[0] = initial_investment + cash
+
+        for i in range(1, len(portfolio_value)):
+            if portfolio_value.index[i].month != portfolio_value.index[i-1].month:
+                new_investment = monthly_deposit*(1-cash_percentage)
+                current_investment = sum(normalized_data.iloc[i-1]*allocation.values*investment_value)
+                allocation = (normalized_data.iloc[i-1]*allocation.values*investment_value + og_allocation.values*new_investment)/(current_investment+new_investment)
+                cash += monthly_deposit*cash_percentage
+                investment_value += new_investment
+            
+            roi = sum(normalized_data.iloc[i] * allocation.values)
+            portfolio_value.iloc[i] = investment_value * roi + cash
+
+        # Calculate portfolio returns
+        portfolio_returns = portfolio_value.pct_change().dropna()
+        
+        return portfolio_returns
+    
+    def report(self, strategy, benchmark):
+        qs.extend_pandas()
+        qs.reports.html(strategy, benchmark, output=f'./src/dataframes/output/full_report.html', title='Portfolio Performance')
+
+        print("Portfolio performance report generated: portfolio_performance.html")

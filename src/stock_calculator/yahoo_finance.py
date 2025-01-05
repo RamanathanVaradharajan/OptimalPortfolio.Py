@@ -24,7 +24,7 @@ class YahooFinance:
         df =  yf.download(
             stock_list,
             # period="max",
-            # start ="2014-01-01",
+            # start ="1999-01-01",
             end="2024-12-29",
             progress=False,
             interval="1d",
