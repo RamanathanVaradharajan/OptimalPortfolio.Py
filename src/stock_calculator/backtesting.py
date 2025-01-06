@@ -94,7 +94,9 @@ class BackTest:
                 allocation = (normalized_data.iloc[i-1]*allocation.values*investment_value + og_allocation.values*new_investment)/(current_investment+new_investment)
                 cash += monthly_deposit*cash_percentage
                 investment_value += new_investment
+                # normalized_data = data / data.iloc[i-1]
             
+            allocation = (normalized_data.iloc[i-1]*allocation.values*investment_value)/sum(normalized_data.iloc[i-1]*allocation.values*investment_value)
             roi = sum(normalized_data.iloc[i] * allocation.values)
             portfolio_value.iloc[i] = investment_value * roi + cash
 

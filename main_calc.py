@@ -24,8 +24,8 @@ if __name__ == "__main__":
 
     print(r"Output.")
 
-    # BackTest().back_test(daily, stocks, output_df["Amount"])
-    # BackTest().back_test(daily, stocks, output_df["Optimal_Allocation"])
+    BackTest().back_test(daily, stocks, output_df["Amount"])
+    BackTest().back_test(daily, stocks, output_df["Optimal_Allocation"])
 
     benchmark = BackTest().daily_return(daily, stocks, output_df["Amount"])
     benchmark.name = "Benchmark"
